@@ -1,16 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container mt-5">
+<div class="min-h-screen bg-[#fdf0d5] flex items-center justify-center p-6">
 
-    <div class="card shadow p-4" style="width: 400px;">
-        <h2 class="mb-4 text-center">Edit Category</h2>
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-[#003049] mb-6 text-center">Edit Category</h2>
 
         {{ form_start(formCategory) }}
 
-            {{ form_row(formCategory.name, {'attr': {'class': 'form-control'}}) }}
+            <div class="mb-4">
+                {{ form_label(formCategory.name, null, {'label_attr': {'class': 'block text-gray-700 mb-2 font-semibold'}}) }}
+                {{ form_widget(formCategory.name, {'attr': {'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#669bbc]'}}) }}
+                {{ form_errors(formCategory.name) }}
+            </div>
 
-            <button type="submit" class="btn btn-success mt-3 w-100">
+            <button type="submit" 
+                    class="w-full bg-gradient-to-r from-[#780000] to-[#c1121f] hover:from-[#c1121f] hover:to-[#780000] text-white font-semibold py-2 rounded transition-all">
                 Update
             </button>
 

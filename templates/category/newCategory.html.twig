@@ -1,20 +1,26 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
-<div class="container">
-<div class='form'>
-<h2>add a Category</h2>
-{{ form_start(formCategory) }}
-{{ form_row(formCategory.name, {'attr':{'class':'form form-control'}}) }}
-<input type="submit" value="Save" class= "btn btn-primary mt-4">
-{{ form_end(formCategory) }}
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Ajouter une catégorie</h2>
+
+    {{ form_start(formCategory) }}
+
+        <div class="mb-4">
+            {{ form_label(formCategory.name, 'Nom de la catégorie', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+            {{ form_widget(formCategory.name, {'attr': {'class': 'w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_errors(formCategory.name) }}
+        </div>
+
+        <div class="mt-6">
+            <button type="submit" 
+                    class="w-full py-2 px-4 rounded font-semibold text-white bg-gradient-to-r from-[#003049] to-[#669bbc] hover:from-[#669bbc] hover:to-[#003049] transition">
+                Enregistrer
+            </button>
+        </div>
+
+    {{ form_end(formCategory) }}
+
 </div>
-
-
-</div>
-
-
-
-
-
-
 {% endblock %}

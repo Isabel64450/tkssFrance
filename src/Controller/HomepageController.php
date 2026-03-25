@@ -21,8 +21,8 @@ final class HomepageController extends AbstractController
          $data = $productRepository->findby([],['id'=>"DESC"]);
         $products = $paginator->paginate(
             $data,
-            $request->query->getInt('page', 1),//met en place la pagination
-            2 //je choisi la limite de 8 articles par page
+            $request->query->getInt('page', 1),
+            2 
         );
 
        return $this->render('homepage/index.html.twig', [

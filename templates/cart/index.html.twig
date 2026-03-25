@@ -3,40 +3,59 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Panier</h1>
-        <table class="table table-bordered">
-            <tr>
-                <th>Produit</th>
-                <th>Prix unité</th>
-                <th>Quantité</th>
-                <th>Prix total</th>
-                
-            </tr>
-            {% for item in items %}
-                <tr>
-                    <td>{{ item.product.name }} </td>
-                    <td>{{ item.product.price }} </td>
-                    <td> <a href=" {{ path('app_cart_decrease', {'id': item.product.id}) }}" class="btn btn-sm btn-outline-danger">-</a>
-    
-                           <span class="mx-2">{{ item.quantity }}</span>
-    
-                         <a href="{{ path('app_cart_increase', {'id': item.product.id}) }}" class="btn btn-sm btn-outline-success">+</a> </td>
-                    <td>{{ item.product.price * item.quantity }} </td>
-                    
-                </tr>
-            {% else %}
-                <p>Votre panier est vide</p>
-            {% endfor %}
-        </table>
-        {% if total > 0 %}
-            <h2>Total: {{ total }} €</h2>
-            <div class="row">
-                <a data-turbo='false' href="{{ path('app_order')}}" class="btn btn-primary col-2 m-lg-1">Valider la commande</a>
-                <a href="{{ path('app_homepage')}}" class="btn btn-success col-2 m-lg-1">Revenir à la boutique</a>
-                <a href="{{ path('app_cart_remove')}}" class="btn btn-danger col-2 m-lg-1">Supprimer le panier</a>
+<div class="min-h-screen bg-[#fdf0d5] p-6 font-sans text-gray-800">
+
+    <h1 class="text-3xl font-bold text-[#003049] mb-6">Votre Panier</h1>
+
+    {% if items|length > 0 %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300 text-sm">
+                <thead class="bg-gradient-to-r from-[#780000] to-[#c1121f] text-white">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Produit</th>
+                        <th class="px-4 py-2 text-left">Prix unité</th>
+                        <th class="px-4 py-2 text-left">Quantité</th>
+                        <th class="px-4 py-2 text-left">Prix total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr class="bg-white even:bg-gray-100">
+                            <td class="px-4 py-2">{{ item.product.name }}</td>
+                            <td class="px-4 py-2">{{ item.product.price }} €</td>
+                            <td class="px-4 py-2 flex items-center">
+                                <a href="{{ path('app_cart_decrease', {'id': item.product.id}) }}" 
+                                   class="bg-[#c1121f] hover:bg-[#780000] text-white px-2 py-1 rounded">-</a>
+                                <span class="mx-2">{{ item.quantity }}</span>
+                                <a href="{{ path('app_cart_increase', {'id': item.product.id}) }}" 
+                                   class="bg-[#669bbc] hover:bg-[#003049] text-white px-2 py-1 rounded">+</a>
+                            </td>
+                            <td class="px-4 py-2 font-semibold">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6 text-right">
+            <h2 class="text-xl font-bold text-[#003049] mb-4">Total : {{ total|number_format(2, ',', ' ') }} €</h2>
+
+            <div class="flex flex-wrap justify-end gap-3">
+                <a data-turbo="false" href="{{ path('app_order')}}" 
+                   class="bg-[#003049] hover:bg-[#669bbc] text-white px-4 py-2 rounded font-semibold">Valider la commande</a>
+                <a href="{{ path('app_homepage')}}" 
+                   class="bg-[#669bbc] hover:bg-[#003049] text-white px-4 py-2 rounded font-semibold">Revenir à la boutique</a>
+                <a href="{{ path('app_cart_remove')}}" 
+                   class="bg-[#c1121f] hover:bg-[#780000] text-white px-4 py-2 rounded font-semibold">Supprimer le panier</a>
             </div>
-        {% endif %}
-    </div>
-    
+        </div>
+    {% else %}
+        <p class="text-[#c1121f] font-semibold">Votre panier est vide</p>
+        <a href="{{ path('app_homepage') }}" 
+           class="inline-block mt-4 bg-[#669bbc] hover:bg-[#003049] text-white px-4 py-2 rounded font-semibold">
+           Revenir à la boutique
+        </a>
+    {% endif %}
+
+</div>
 {% endblock %}

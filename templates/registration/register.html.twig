@@ -3,61 +3,67 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-
-   <div class="card shadow p-4" style="width: 400px;">
-        <h1 class="text-center mb-4">Register</h1>
+<div class="min-h-screen flex items-center justify-center bg-[#fdf0d5]">
+    <div class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-6 text-[#003049]">Register</h1>
 
         {{ form_start(registrationForm) }}
-         
-            <div class="mb-3">
-                {{ form_label(registrationForm.first_name, 'Prenom', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.first_name, {'attr': {'class': 'form-control'}}) }}
+        
+        <div class="space-y-4">
+            
+            <div>
+                {{ form_label(registrationForm.first_name, 'Prénom', {'label_attr': {'class': 'block mb-1 font-medium text-[#003049]'}}) }}
+                {{ form_widget(registrationForm.first_name, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gradient-to-r focus:ring-blue-500 focus:border-blue-500'}}) }}
                 {{ form_errors(registrationForm.first_name) }}
             </div>
-             <div class="mb-3">
-                {{ form_label(registrationForm.last_name, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.last_name, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.last_name) }}
-            </div> 
 
-            <div class="mb-3">
-                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+          
+            <div>
+                {{ form_label(registrationForm.last_name, 'Nom', {'label_attr': {'class': 'block mb-1 font-medium text-[#003049]'}}) }}
+                {{ form_widget(registrationForm.last_name, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gradient-to-r focus:ring-blue-500 focus:border-blue-500'}}) }}
+                {{ form_errors(registrationForm.last_name) }}
+            </div>
+
+           
+            <div>
+                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'block mb-1 font-medium text-[#003049]'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gradient-to-r focus:ring-blue-500 focus:border-blue-500'}}) }}
                 {{ form_errors(registrationForm.email) }}
             </div>
-            
 
-
-            <div class="mb-3">
-                {{ form_label(registrationForm.dateOfBirth, 'Date de naissance', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.dateOfBirth, {'attr': {'class': 'form-control'}}) }}
+           
+            <div>
+                {{ form_label(registrationForm.dateOfBirth, 'Date de naissance', {'label_attr': {'class': 'block mb-1 font-medium text-[#003049]'}}) }}
+                {{ form_widget(registrationForm.dateOfBirth, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gradient-to-r focus:ring-blue-500 focus:border-blue-500'}}) }}
                 {{ form_errors(registrationForm.dateOfBirth) }}
             </div>
 
-            <div class="mb-3">
-                {{ form_label(registrationForm.gender, 'Genre', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-select'}}) }}
+            
+            <div>
+                {{ form_label(registrationForm.gender, 'Genre', {'label_attr': {'class': 'block mb-1 font-medium text-[#003049]'}}) }}
+                {{ form_widget(registrationForm.gender, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gradient-to-r focus:ring-blue-500 focus:border-blue-500'}}) }}
                 {{ form_errors(registrationForm.gender) }}
             </div>
 
             
-            
-            <div class="mb-3">
-                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+            <div>
+                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'block mb-1 font-medium text-[#003049]'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gradient-to-r focus:ring-blue-500 focus:border-blue-500'}}) }}
                 {{ form_errors(registrationForm.plainPassword) }}
             </div>
 
-            <div class="form-check mb-3">
-                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-                {{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'form-check-label'}}) }}
+           
+            <div class="flex items-center">
+                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'text-[#003049]'}}) }}
                 {{ form_errors(registrationForm.agreeTerms) }}
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">
+           
+            <button type="submit" class="w-full py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-500 to-red-500 hover:from-red-500 hover:to-blue-500 transition-all">
                 Register
             </button>
+        </div>
 
         {{ form_end(registrationForm) }}
     </div>

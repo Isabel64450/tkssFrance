@@ -6,27 +6,67 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    #[Route('/user/{id}/assign-role', name: 'app_user_assign_role', methods: ['GET','POST'])]
+    public function assignRole(Request $request, User $user, EntityManagerInterface $em): Response
     {
+        $gender = $user->getGender();
+
+        $rolesFemale = ['ROLE_MISKY', 'ROLE_KALINCHA', 'ROLE_MAMALA'];
+        $rolesMale = ['ROLE_CHASCAS', 'ROLE_ROMPES', 'ROLE_PACHAS', 'ROLE_MACHUS'];
+        $availableRoles = $gender === 'female' ? $rolesFemale : $rolesMale;
+
+        // POST → traitement du formulaire
+        if ($request->isMethod('POST')) {
+            $role = $request->request->get('role');
+
+            if (!$role) {
+                $this->addFlash('error', 'Aucun rôle fourni');
+                return $this->redirectToRoute('app_user_assign_role', ['id' => $user->getId()]);
+            }
+
+            if (!in_array($role, $availableRoles)) {
+                $this->addFlash('error', 'Rôle invalide pour ce genre');
+                return $this->redirectToRoute('app_user_assign_role', ['id' => $user->getId()]);
+            }
+
+            $user->setRoles([$role]);
+            $em->flush();
+
+            $this->addFlash('success', 'Rôle mis à jour');
+            return $this->redirectToRoute('app_user_list');
+        }
+
+        // GET → affichage du formulaire
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'user' => $user,
+            'availableRoles' => $availableRoles,
         ]);
     }
+
 
     #[Route('/profile', name: 'app_profile')]
  
      public function profile(Security $security): Response
     {
-    $user = $security->getUser();
+     $user = $security->getUser();     
+    $age = null;
+
+    
+    if ($user instanceof \App\Entity\User && $user->getDateOfBirth()) {
+        $today = new \DateTimeImmutable('today');
+        $birthDate = $user->getDateOfBirth(); 
+        $age = $birthDate->diff($today)->y; 
+    }
 
     return $this->render('user/profile.html.twig', [
         'user' => $user,
+        'age' => $age, 
     ]);
    }
 

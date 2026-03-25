@@ -3,45 +3,60 @@
 {% block title %}City index{% endblock %}
 
 {% block body %}
+<div class="max-w-7xl mx-auto px-4 py-6">
 
-<div class="container">
-     <div class=" table table-bordered">
+    <h1 class="text-3xl font-bold text-[#003049] mb-6">Liste des villes</h1>
 
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+            
+            <thead class="bg-gradient-to-r from-[#003049] to-[#669bbc] text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">ID</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Nom</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Frais livraison</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Actions</th>
+                </tr>
+            </thead>
 
-          <h1>City index</h1>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for city in cities %}
+                    <tr class="hover:bg-[#fdf0d5] transition">
+                        <td class="px-6 py-4">{{ city.id }}</td>
+                        <td class="px-6 py-4 font-medium text-gray-800">{{ city.name }}</td>
+                        <td class="px-6 py-4 text-gray-700">
+                            {{ city.shippingCost }} €
+                        </td>
+                        <td class="px-6 py-4 space-x-2">
+                            <a href="{{ path('app_city_show', {'id': city.id}) }}"
+                               class="px-3 py-1 rounded bg-[#669bbc] text-white hover:bg-[#003049] transition">
+                                Show
+                            </a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>ShippingCost</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for city in cities %}
-            <tr>
-                <td>{{ city.id }}</td>
-                <td>{{ city.name }}</td>
-                <td>{{ city.shippingCost }}</td>
-                <td>
-                    <a href="{{ path('app_city_show', {'id': city.id}) }}">show</a>
-                    <a href="{{ path('app_city_edit', {'id': city.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                            <a href="{{ path('app_city_edit', {'id': city.id}) }}"
+                               class="px-3 py-1 rounded bg-gradient-to-r from-[#780000] to-[#c1121f] text-white hover:from-[#c1121f] hover:to-[#780000] transition">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                            Aucune ville trouvée
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
 
-    <a href="{{ path('app_city_new') }}">Create new</a>
+        </table>
+    </div>
 
+    <div class="mt-6">
+        <a href="{{ path('app_city_new') }}"
+           class="inline-block px-5 py-2 rounded text-white font-semibold bg-gradient-to-r from-[#003049] to-[#669bbc] hover:from-[#669bbc] hover:to-[#003049] transition">
+            Ajouter une ville
+        </a>
+    </div>
 
-     </div>
 </div>
-    
 {% endblock %}

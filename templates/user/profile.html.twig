@@ -35,9 +35,7 @@
 
         <div>
             <p class="text-gray-500 text-sm">Date de naissance</p>
-            <p class="font-semibold">
-                {{ user.dateOfBirth ? user.dateOfBirth|date('d/m/Y') : 'Non renseignée' }}
-            </p>
+            <p>Âge : {{ age is not null ? age ~ ' ans' : 'Non renseigné' }}</p>
         </div>
 
         <div>

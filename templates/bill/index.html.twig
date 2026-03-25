@@ -1,159 +1,84 @@
 {% block body %}
-<div class="container">
+<div class="min-h-screen bg-[#fdf0d5] font-sans text-gray-800 p-6">
 
-    
-    <div class="header">
-        <div class="left">
-            <h2>TKSS</h2>
-            <p>123 Av les invalides Paris</p>
-            <p>contact@boutique.com | 0123456789</p>
+   
+    <div class="flex justify-between mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-[#003049]">TKSS</h2>
+            <p class="text-sm">123 Av les Invalides, Paris</p>
+            <p class="text-sm">contact@boutique.com | 0123456789</p>
         </div>
-        <div class="right">
-            <h3>Facture</h3>
-            <p>N° {{ order.id }}</p>
-            <p>Date : {{ order.createdAt|date('d/m/Y') }}</p>
+        <div class="text-right">
+            <h3 class="text-xl font-semibold text-[#003049]">Facture</h3>
+            <p class="text-sm">N° {{ order.id }}</p>
+            <p class="text-sm">Date : {{ order.createdAt|date('d/m/Y') }}</p>
         </div>
-        <div class="clear"></div>
     </div>
 
-    <hr>
-
-
-    <h5 class='text-primary mt-3'>Informations du client</h5>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Téléphone</th>
-                <th>Adresse</th>
-                <th>Ville</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ order.lastName }}</td>
-                <td>{{ order.firstName }}</td>
-                <td>{{ order.telephoneNumber }}</td>
-                <td>{{ order.address }}</td>
-                <td>{{ order.city.name }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h5 class='text-primary mt-4'>Corps de la commande</h5>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nom du produit</th>
-                <th>Description</th>
-                <th>Prix unitaire</th>
-                <th>Quantité</th>
-                <th>Total produit</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in order.orderProducts %}
-            <tr>
-                <td>{{ product.product.name }}</td>
-                <td>{{ product.product.description|slice(0,80) ~ '...' }}</td>
-                <td>{{ product.product.price|number_format(2, ',', ' ') }} €</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ (product.product.price*product.quantity)|number_format(2, ',', ' ') }} €</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <hr class="border-gray-300 mb-6">
 
     
-    <div class="total">
-        <p>Frais de livraison : {{ order.city.shippingCost|number_format(2, ',', ' ') }} €</p>
-        <h3>Total à payer : {{ order.totalPrice|number_format(2, ',', ' ') }} €</h3>
+    <h5 class="text-[#003049] font-semibold mb-2">Informations du client</h5>
+    <div class="overflow-x-auto mb-6">
+        <table class="min-w-full border border-gray-300 text-sm">
+            <thead class="bg-[#003049] text-white">
+                <tr>
+                    <th class="px-4 py-2 text-left">Nom</th>
+                    <th class="px-4 py-2 text-left">Prénom</th>
+                    <th class="px-4 py-2 text-left">Téléphone</th>
+                    <th class="px-4 py-2 text-left">Adresse</th>
+                    <th class="px-4 py-2 text-left">Ville</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white even:bg-gray-100">
+                    <td class="px-4 py-2">{{ order.lastName }}</td>
+                    <td class="px-4 py-2">{{ order.firstName }}</td>
+                    <td class="px-4 py-2">{{ order.telephoneNumber }}</td>
+                    <td class="px-4 py-2">{{ order.address }}</td>
+                    <td class="px-4 py-2">{{ order.city.name }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-  
-    <div class="footer">
+   
+    <h5 class="text-[#003049] font-semibold mb-2">Corps de la commande</h5>
+    <div class="overflow-x-auto mb-6">
+        <table class="min-w-full border border-gray-300 text-sm">
+            <thead class="bg-[#003049] text-white">
+                <tr>
+                    <th class="px-4 py-2 text-left">Nom du produit</th>
+                    <th class="px-4 py-2 text-left">Description</th>
+                    <th class="px-4 py-2 text-left">Prix unitaire</th>
+                    <th class="px-4 py-2 text-left">Quantité</th>
+                    <th class="px-4 py-2 text-left">Total produit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in order.orderProducts %}
+                <tr class="bg-white even:bg-gray-100">
+                    <td class="px-4 py-2">{{ product.product.name }}</td>
+                    <td class="px-4 py-2">{{ product.product.description|slice(0,80) ~ '...' }}</td>
+                    <td class="px-4 py-2">{{ product.product.price|number_format(2, ',', ' ') }} €</td>
+                    <td class="px-4 py-2">{{ product.quantity }}</td>
+                    <td class="px-4 py-2">{{ (product.product.price*product.quantity)|number_format(2, ',', ' ') }} €</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-right mb-6">
+        <p class="text-sm">Frais de livraison : {{ order.city.shippingCost|number_format(2, ',', ' ') }} €</p>
+        <h3 class="text-xl font-bold">Total à payer : {{ order.totalPrice|number_format(2, ',', ' ') }} €</h3>
+    </div>
+
+   
+    <footer class="fixed bottom-4 w-full text-center text-xs text-gray-500">
         Merci pour votre achat !<br>
         TVA non applicable – Article 293 B du CGI
-    </div>
+    </footer>
 
 </div>
-
-<style>
-    body {
-        font-family: DejaVu Sans, Arial, sans-serif;
-        font-size: 12px;
-        color: #333;
-    }
-
-    .container {
-        width: 100%;
-        margin: auto;
-    }
-
-    .header {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .header .left {
-        float: left;
-    }
-
-    .header .right {
-        float: right;
-        text-align: right;
-    }
-
-    .clear {
-        clear: both;
-    }
-
-    h2, h3, h5 {
-        margin: 0;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-    }
-
-    .table th {
-        background-color: #444;
-        color: white;
-        padding: 10px;
-        font-size: 12px;
-        border: 1px solid #ddd;
-    }
-
-    .table td {
-        padding: 8px;
-        border: 1px solid #ddd;
-        font-size: 12px;
-    }
-
-    .table tr:nth-child(even) {
-        background-color: #f7f7f7;
-    }
-
-    .total {
-        text-align: right;
-        margin-top: 20px;
-    }
-
-    .total h3 {
-        margin: 5px 0;
-        color: #000;
-    }
-
-    .footer {
-        position: fixed;
-        bottom: 10px;
-        width: 100%;
-        text-align: center;
-        font-size: 10px;
-        color: #777;
-    }
-</style>
 {% endblock %}
