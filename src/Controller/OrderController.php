@@ -12,6 +12,7 @@ use App\Service\Cart;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -26,18 +27,20 @@ final class OrderController extends AbstractController
 
 
     #[Route('/order', name: 'app_order')]
-    public function index(Request $request, SessionInterface $session, ProductRepository $productRepository, EntityManagerInterface $entityManager, Cart $cart): Response
+    public function index(Request $request, SessionInterface $session, ProductRepository $productRepository, EntityManagerInterface $entityManager, Cart $cart, Security $security): Response
     {   
         $data=$cart->getCart($session);
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);       
         if($form->isSubmitted() && $form->isValid()){
+            $user = $security->getUser();
             if($order->isPayOnDelivery()){
                 if(!empty($data['total'])){
                 $totalPrice = $data['total'] + $order->getCity()->getShippingCost();
                 $order->setTotalPrice($totalPrice);
                 $order->setCreatedAt(new \DateTimeImmutable());
+                $order->setUser($user);
                 $entityManager->persist($order);
                 $entityManager->flush();
 

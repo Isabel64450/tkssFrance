@@ -1,96 +1,155 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ path('app_homepage') }}">TKSS Fr</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_homepage') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Events</a> 
-                </li>
-                {% if categories is defined %}
-                    <li class="nav-item dropdown">
-
-                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catégories</a>
-
-                            <ul class="dropdown-menu">
-                {% for category in categories %}
-                      <li><a class="dropdown-item text-primary categoryTitle" href="">{{ category.name }}</a></li>
-
-                {% for subCategory in category.subCategories %}
-                    <li><a class="dropdown-item" href="{{ path('app_home_product_filter',{'id':subCategory.id} )}} ">{{ subCategory.name }}</a></li>
-                {% endfor %}
-
-                    <li><hr class="dropdown-divider"></li>
-                {% endfor %}
-                      
-                            </ul>
-
-                    </li>
-                {% endif %}
-                {% if is_granted("ROLE_ADMIN") %}
-                 <li class="nav-item dropdown">
-                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Admin </a>
-                  <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{{ path('app_category') }}">Catégories</a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                 <li><a class="dropdown-item" href="{{ path('app_sub_category_index') }}">Sous-catégories</a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_sub_category_new') }}">Ajouter une sous-catégorie</a></li>
-                  
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{{ path('app_product_index') }}">Produits</a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_product_new') }}">Ajouter un produit</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{{ path('app_user_list')}}">Utilisateurs</a></li>
-                  
-                  </ul>
-                </li>
-                 {% endif %}
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_product_index')}}">Products</a> 
-                </li>
-
-             
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Account
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        {% if app.user %}
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
-                        {% else %}
-                            <li><a class="dropdown-item" href="{{ path('app_login') }}">Login</a></li>
-                        {% endif %}
-                    </ul>
-                </li>
-            </ul>
+           
+            <a href="{{ path('app_homepage') }}" class="text-xl font-bold text-gray-800">
+                TKSS Fr
+            </a>
 
             
-            <form class="d-flex" method="get" action="#">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <a href="{{ path('app_cart') }}" class="btn btn-outline-dark ms-3 position-relative">
-                 <i class="bi bi-cart"></i>
-                 {% if cartCount > 0 %}
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                 {{ cartCount }}
-                </span>
-                 {% endif %}
-            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+
+                <a href="{{ path('app_homepage') }}" class="text-gray-700 hover:text-blue-500">
+                    Home
+                </a>
+                <a href="#" class="text-gray-700 hover:text-blue-500">
+                    Events
+                </a>
+
+              
+                {% if categories is defined %}
+                <div class="relative">
+                    <button id="catBtn" class="text-gray-700 hover:text-blue-500 font-medium">
+                        Catégories
+                    </button>
+                    <div id="catDropdown" class="absolute hidden bg-white shadow-lg mt-2 rounded w-56 z-50">
+                        {% for category in categories %}
+                            <div class="px-4 py-2 font-semibold text-blue-500">{{ category.name }}</div>
+                            {% for subCategory in category.subCategories %}
+                                <a href="{{ path('app_home_product_filter', {'id': subCategory.id}) }}"
+                                   class="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                    {{ subCategory.name }}
+                                </a>
+                            {% endfor %}
+                            <hr class="border-t my-1">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+             
+                {% if is_granted("ROLE_ADMIN") %}
+                <div class="relative">
+                    <button id="adminBtn" class="text-gray-700 hover:text-blue-500 font-medium">
+                        Admin
+                    </button>
+                    <div id="adminDropdown" class="absolute hidden bg-white shadow-lg mt-2 rounded w-56 z-50">
+                        <a href="{{ path('app_category') }}" class="block px-4 py-2 hover:bg-gray-100">Catégories</a>
+                        <a href="{{ path('app_category_new') }}" class="block px-4 py-2 hover:bg-gray-100">Ajouter catégorie</a>
+                        <hr class="border-t my-1">
+                        <a href="{{ path('app_sub_category_index') }}" class="block px-4 py-2 hover:bg-gray-100">Sous-catégories</a>
+                        <a href="{{ path('app_sub_category_new') }}" class="block px-4 py-2 hover:bg-gray-100">Ajouter sous-catégorie</a>
+                        <hr class="border-t my-1">
+                        <a href="{{ path('app_product_index') }}" class="block px-4 py-2 hover:bg-gray-100">Produits</a>
+                        <a href="{{ path('app_product_new') }}" class="block px-4 py-2 hover:bg-gray-100">Ajouter produit</a>
+                        <hr class="border-t my-1">
+                        <a href="{{ path('app_user_list') }}" class="block px-4 py-2 hover:bg-gray-100">Utilisateurs</a>
+                    </div>
+                </div>
+                {% endif %}
+
+                
+                {% if app.user %}
+                <div class="relative">
+                    <button id="accountBtn" class="text-gray-700 hover:text-blue-500 font-medium">
+                        Account
+                    </button>
+                    <div id="accountDropdown" class="absolute hidden bg-white shadow-lg mt-2 rounded w-48 z-50">
+                        <a href="{{ path('app_profile') }}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                        <hr class="border-t my-1">
+                        <a href="{{ path('app_logout') }}" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{{ path('app_login') }}" class="text-gray-700 hover:text-blue-500 px-4 py-2 border rounded">
+                    Login
+                </a>
+                {% endif %}
+
+                
+                <form method="get" action="#" class="flex items-center">
+                    <input type="search" name="q"
+                           class="border rounded px-2 py-1 text-sm"
+                           placeholder="Search">
+                    <button class="ml-2 bg-green-500 text-white px-3 py-1 rounded">
+                        OK
+                    </button>
+                </form>
+
+               
+                <a href="{{ path('app_cart') }}" class="relative ml-4">
+                    🛒
+                    {% if cartCount > 0 %}
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                            {{ cartCount }}
+                        </span>
+                    {% endif %}
+                </a>
+
+            </div>
+
+           
+            <button id="menuBtn" class="md:hidden text-gray-700">☰</button>
+
         </div>
     </div>
+
+   
+    <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
+        <a href="{{ path('app_homepage') }}" class="block py-2">Home</a>
+        <a href="#" class="block py-2">Events</a>
+        {% if app.user %}
+            <a href="{{ path('app_profile') }}" class="block py-2">Profile</a>
+            <a href="{{ path('app_logout') }}" class="block py-2">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="block py-2">Login</a>
+        {% endif %}
+    </div>
 </nav>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const toggleDropdown = (btnId, dropdownId) => {
+        const btn = document.getElementById(btnId);
+        const dropdown = document.getElementById(dropdownId);
+
+        if(!btn || !dropdown) return;
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if(!btn.contains(e.target) && !dropdown.contains(e.target)){
+                dropdown.classList.add('hidden');
+            }
+        });
+    }
+
+    toggleDropdown('catBtn', 'catDropdown');
+    toggleDropdown('adminBtn', 'adminDropdown');
+    toggleDropdown('accountBtn', 'accountDropdown');
+
+    
+    const mobileMenuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+});
+</script>

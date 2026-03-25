@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+
+<div class="max-w-4xl mx-auto mt-10 bg-white shadow-md rounded-lg p-6">
+
+ 
+    <div class="flex items-center justify-between border-b pb-4 mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Mon profil</h1>
+        <span class="text-sm px-3 py-1 rounded-full 
+            {{ user.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+            {{ user.isActive ? 'Actif' : 'Inactif' }}
+        </span>
+    </div>
+
+ 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div>
+            <p class="text-gray-500 text-sm">Email</p>
+            <p class="font-semibold">{{ user.email }}</p>
+        </div>
+
+        <div>
+            <p class="text-gray-500 text-sm">Nom</p>
+            <p class="font-semibold">{{ user.lastName }}</p>
+        </div>
+
+        <div>
+            <p class="text-gray-500 text-sm">Prénom</p>
+            <p class="font-semibold">{{ user.firstName }}</p>
+        </div>
+
+        <div>
+            <p class="text-gray-500 text-sm">Date de naissance</p>
+            <p class="font-semibold">
+                {{ user.dateOfBirth ? user.dateOfBirth|date('d/m/Y') : 'Non renseignée' }}
+            </p>
+        </div>
+
+        <div>
+            <p class="text-gray-500 text-sm">Date d'inscription</p>
+            <p class="font-semibold">
+                {{ user.inscriptionDate|date('d/m/Y') }}
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="max-w-4xl mx-auto mt-8 bg-white shadow-md rounded-lg p-6">
+
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Mes commandes</h2>
+
+    {% if user.orders|length > 0 %}
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-600 text-sm uppercase">
+                        <th class="p-3">ID</th>
+                        <th class="p-3">Date</th>
+                        <th class="p-3">Total</th>
+                        <th class="p-3">Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in user.orders %}
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">#{{ order.id }}</td>
+                            <td class="p-3">{{ order.createdAt|date('d/m/Y') }}</td>
+                            <td class="p-3">{{ order.totalPrice }} €</td>
+                            <td class="p-3">
+                                <span class="px-2 py-1 text-sm rounded 
+                                    {{ order.isCompleted ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                    {{ order.isCompleted ? 'Payée' : 'En attente' }}
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-gray-500">Aucune commande pour le moment.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

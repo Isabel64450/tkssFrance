@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Boutique{% endblock %}
 
@@ -28,5 +28,112 @@
 </div>
 
 
+
+{% endblock %}
+ #}
+
+
+ {% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+
+<section class="text-white py-20" 
+         style="background: linear-gradient(90deg, #780000, #c1121f, #fdf0d5, #003049, #669bbc);">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+            Tinkus San Simón France
+        </h1>
+
+        <p class="text-lg md:text-xl mb-8">
+            Groupe de danse traditionnelle bolivienne, nous partageons la culture,
+            l’énergie et la passion des Tinkus à travers des spectacles et événements en France.
+        </p>
+
+        <a href="#events"
+           class="bg-white text-red-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+            Voir les événements
+        </a>
+
+    </div>
+</section>
+
+
+<section id="events" class="py-16 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+
+        <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">
+            Nos événements
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+
+           
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+                <img src="https://via.placeholder.com/400x250" class="rounded mb-4">
+                <h3 class="text-xl font-semibold mb-2">Festival Latino</h3>
+                <p class="text-gray-600 text-sm mb-2">Bordeaux - Juin 2026</p>
+                <p class="text-gray-500 text-sm">
+                    Spectacle de danse Tinkus avec musique live.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+                <img src="https://via.placeholder.com/400x250" class="rounded mb-4">
+                <h3 class="text-xl font-semibold mb-2">Carnaval</h3>
+                <p class="text-gray-600 text-sm mb-2">Pau - Mars 2026</p>
+                <p class="text-gray-500 text-sm">
+                    Participation au défilé avec costumes traditionnels.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+                <img src="https://via.placeholder.com/400x250" class="rounded mb-4">
+                <h3 class="text-xl font-semibold mb-2">Soirée culturelle</h3>
+                <p class="text-gray-600 text-sm mb-2">Toulouse</p>
+                <p class="text-gray-500 text-sm">
+                    Découverte des danses boliviennes et initiation.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+
+        <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">
+            Ambiance & Culture
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <img src="https://via.placeholder.com/300" class="rounded-lg">
+            <img src="https://via.placeholder.com/300" class="rounded-lg">
+            <img src="https://via.placeholder.com/300" class="rounded-lg">
+            <img src="https://via.placeholder.com/300" class="rounded-lg">
+        </div>
+
+    </div>
+</section>
+
+
+<section class="bg-gray-900 text-white py-16 text-center">
+    <h2 class="text-3xl font-bold mb-4">
+        Rejoignez-nous !
+    </h2>
+    <p class="mb-6 text-gray-300">
+        Vous souhaitez participer ou organiser un événement avec nous ?
+    </p>
+    <a href="#"
+       class="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-full font-semibold">
+        Nous contacter
+    </a>
+</section>
 
 {% endblock %}
