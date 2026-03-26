@@ -21,7 +21,7 @@ final class UserController extends AbstractController
         $rolesMale = ['ROLE_CHASCAS', 'ROLE_ROMPES', 'ROLE_PACHAS', 'ROLE_MACHUS'];
         $availableRoles = $gender === 'female' ? $rolesFemale : $rolesMale;
 
-        // POST → traitement du formulaire
+       
         if ($request->isMethod('POST')) {
             $role = $request->request->get('role');
 
@@ -42,7 +42,7 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_user_list');
         }
 
-        // GET → affichage du formulaire
+        
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'availableRoles' => $availableRoles,

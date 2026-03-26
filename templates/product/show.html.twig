@@ -3,36 +3,62 @@
 {% block title %}Product{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Product</h1>
+<div class="max-w-3xl mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">
+        Détails du produit
+    </h1>
 
-    <a href="{{ path('app_product_index') }}">Retour à la liste</a>
+    <div class="divide-y divide-gray-200">
 
-    <a class="btn btn-outline-success" href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+        <div class="py-3 flex justify-between">
+            <span class="font-semibold text-gray-600">ID</span>
+            <span class="text-gray-800">{{ product.id }}</span>
+        </div>
 
-    <a href="{{ path('app_product_stock_add_history', {'id': product.id}) }}">Afficher l'historique de stock</a>
+        <div class="py-3 flex justify-between">
+            <span class="font-semibold text-gray-600">Nom</span>
+            <span class="text-gray-800">{{ product.name }}</span>
+        </div>
 
-    {{ include('product/_delete_form.html.twig') }}
+        <div class="py-3 flex justify-between">
+            <span class="font-semibold text-gray-600">Description</span>
+            <span class="text-gray-800 text-right max-w-md">
+                {{ product.description }}
+            </span>
+        </div>
+
+        <div class="py-3 flex justify-between">
+            <span class="font-semibold text-gray-600">Prix</span>
+            <span class="text-indigo-600 font-bold">
+                {{ product.price }} €
+            </span>
+        </div>
+
     </div>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+
+        <a href="{{ path('app_product_index') }}"
+           class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+            ← Retour
+        </a>
+
+        <a href="{{ path('app_product_edit', {'id': product.id}) }}"
+           class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+            Modifier
+        </a>
+
+        <a href="{{ path('app_product_stock_add_history', {'id': product.id}) }}"
+           class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            Historique stock
+        </a>
+
+        <div>
+            {{ include('product/_delete_form.html.twig') }}
+        </div>
+
+    </div>
+
+</div>
 {% endblock %}
