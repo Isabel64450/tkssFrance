@@ -1,12 +1,50 @@
 {{ form_start(form) }}
-   
-    {{ form_row(form.name, {'attr':{'class':'form form-control'}}) }}
-    {{ form_row(form.description, {'attr':{'class':'form form-control'}}) }}
-    {{ form_row(form.price, {'attr':{'class':'form form-control'}}) }}
+
+<div class="space-y-4">
+
+    {{ form_row(form.name, {
+        'attr': {
+            'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+        }
+    }) }}
+
+    {{ form_row(form.description, {
+        'attr': {
+            'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+        }
+    }) }}
+
+    {{ form_row(form.price, {
+        'attr': {
+            'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+        }
+    }) }}
+
     {% if button_label != 'Update' %}
-    {{ form_row(form.stock, {'attr':{'class':'form form-control'}}) }}
+        {{ form_row(form.stock, {
+            'attr': {
+                'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+            }
+        }) }}
     {% endif %}
-    {{ form_row(form.subCategory, {'attr':{'class':'form form-control'}}) }}
-    {{ form_row(form.image, {'attr':{'class':'form'}}) }}
-    <button class="btn btn-outline-primary">{{ button_label|default('Save') }}</button>
+
+    {{ form_row(form.subCategory, {
+        'attr': {
+            'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+        }
+    }) }}
+
+    {{ form_row(form.image, {
+        'attr': {
+            'class': 'w-full'
+        }
+    }) }}
+
+    <button type="submit"
+            class="w-full bg-[#c1121f] hover:bg-[#780000] text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+        {{ button_label|default('Save') }}
+    </button>
+
+</div>
+
 {{ form_end(form) }}

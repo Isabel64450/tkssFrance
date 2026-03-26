@@ -1,27 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="min-h-screen bg-[#fdf0d5] py-10 px-4">
 
-    <div class="container">
-    <h1>History time added Stock </h1>
-    
-        <table class="table">
-            <tr>
-    
-                <th>Id</th>
-                <th>Name</th> 
-                <th>Quantité</th>
-                <th>Date d'ajout</th>
-            </tr>
-            {% for productAdded in productsAdded %}
-            <tr>
-           
-                <td>{{ productAdded.id }}</td>
-                <td>{{ productAdded.product.name }}</td>
-                <td>{{ productAdded.quantity }}</td>
-                <td>{{ productAdded.createdAt|date('d-m-Y H:i:s', 'Europe/Paris') }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl border border-[#669bbc] p-6">
+
+        <h1 class="text-3xl font-bold text-[#003049] mb-6 text-center">
+            Historique des ajouts de stock
+        </h1>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-[#669bbc] rounded-lg overflow-hidden">
+
+                <thead class="bg-[#003049] text-white">
+                    <tr>
+                        <th class="py-3 px-4 text-left">Id</th>
+                        <th class="py-3 px-4 text-left">Produit</th>
+                        <th class="py-3 px-4 text-left">Quantité</th>
+                        <th class="py-3 px-4 text-left">Date d'ajout</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-[#669bbc]">
+
+                    {% for productAdded in productsAdded %}
+                        <tr class="hover:bg-[#fdf0d5] transition duration-200">
+
+                            <td class="py-3 px-4 text-[#003049] font-medium">
+                                {{ productAdded.id }}
+                            </td>
+
+                            <td class="py-3 px-4 text-[#c1121f] font-semibold">
+                                {{ productAdded.product.name }}
+                            </td>
+
+                            <td class="py-3 px-4 text-[#003049]">
+                                {{ productAdded.quantity }}
+                            </td>
+
+                            <td class="py-3 px-4 text-[#669bbc]">
+                                {{ productAdded.createdAt|date('d-m-Y H:i:s', 'Europe/Paris') }}
+                            </td>
+
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center py-6 text-[#780000]">
+                                Aucun historique trouvé
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
     </div>
+</div>
 {% endblock %}

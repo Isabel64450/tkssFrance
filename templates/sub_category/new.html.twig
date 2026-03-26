@@ -1,15 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New SubCategory{% endblock %}
+{% block title %}Nouvelle Sous-Catégorie{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="min-h-screen bg-[#fdf0d5] py-10 px-4">
 
+    <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl border border-[#669bbc] p-8">
 
-    <h1>Create new SubCategory</h1>
+        <h1 class="text-3xl font-bold text-[#003049] mb-6 text-center">
+            Créer une nouvelle sous-catégorie
+        </h1>
 
-    {{ include('sub_category/_form.html.twig') }}
+        <div class="mb-6">
+            {{ include('sub_category/_form.html.twig') }}
+        </div>
 
-    <a href="{{ path('app_sub_category_index') }}" class="btn btn-outline-primary">back to list</a>
+        <div class="text-center">
+            <a href="{{ path('app_sub_category_index') }}"
+               class="inline-block px-6 py-2 bg-[#669bbc] hover:bg-[#003049] text-white font-semibold rounded-lg transition duration-300">
+                ← Retour à la liste
+            </a>
+        </div>
+
     </div>
+</div>
 {% endblock %}

@@ -1,8 +1,36 @@
 {{ form_start(form) }}
-    <label for="">Nom de la sous-catégorie</label>
-    {{ form_widget(form.name, {attr:{'class': 'form form-control'}}) }}
-    <label for="">Catégorie</label>
-  
-     {{ form_widget(form.category, {attr:{'class': 'form form-control'}}) }}
-    <button class="btn btn-outline-primary">{{ button_label|default('Sauvegarder') }}</button>
+
+<div class="space-y-4">
+
+    <div>
+        <label class="block mb-2 text-[#003049] font-semibold" for="{{ form.name.vars.id }}">
+            Nom de la sous-catégorie
+        </label>
+        {{ form_widget(form.name, {
+            'attr': {
+                'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+            }
+        }) }}
+        {{ form_errors(form.name) }}
+    </div>
+
+    <div>
+        <label class="block mb-2 text-[#003049] font-semibold" for="{{ form.category.vars.id }}">
+            Catégorie
+        </label>
+        {{ form_widget(form.category, {
+            'attr': {
+                'class': 'w-full px-4 py-2 border border-[#669bbc] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#669bbc]'
+            }
+        }) }}
+        {{ form_errors(form.category) }}
+    </div>
+
+    <button type="submit"
+            class="w-full bg-[#c1121f] hover:bg-[#780000] text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+        {{ button_label|default('Sauvegarder') }}
+    </button>
+
+</div>
+
 {{ form_end(form) }}

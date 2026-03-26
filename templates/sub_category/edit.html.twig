@@ -1,13 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit SubCategory{% endblock %}
+{% block title %}Modifier Sous-Catégorie{% endblock %}
 
 {% block body %}
-    <h1>Edit SubCategory</h1>
+<div class="min-h-screen bg-[#fdf0d5] py-10 px-4">
 
-    {{ include('sub_category/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl border border-[#669bbc] p-8">
 
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
+        <h1 class="text-3xl font-bold text-[#003049] mb-6 text-center">
+            Modifier la Sous-Catégorie
+        </h1>
 
-    {{ include('sub_category/_delete_form.html.twig') }}
+        <div class="mb-6">
+            {{ include('sub_category/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+
+        <div class="flex justify-center space-x-4 mt-6">
+            <a href="{{ path('app_sub_category_index') }}"
+               class="px-4 py-2 bg-[#669bbc] hover:bg-[#003049] text-white font-semibold rounded-lg transition duration-300">
+                ← Retour à la liste
+            </a>
+
+            {{ include('sub_category/_delete_form.html.twig') | replace({
+                'btn': '<button class="px-4 py-2 bg-[#780000] hover:bg-[#c1121f] text-white font-semibold rounded-lg transition duration-300">Supprimer</button>'
+            }) }}
+        </div>
+
+    </div>
+</div>
 {% endblock %}

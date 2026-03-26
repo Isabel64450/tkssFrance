@@ -3,14 +3,28 @@
 {% block title %}Edit Product{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="min-h-screen bg-[#fdf0d5] flex items-center justify-center py-10">
+    <div class="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-8 border border-[#669bbc]">
 
-    <h1>Edit Product</h1>
+        <h1 class="text-3xl font-bold text-[#003049] mb-6 text-center">
+            Edit Product
+        </h1>
 
-    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class="mb-6">
+            {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
 
-    <a href="{{ path('app_product_index') }}">back to list</a>
+        <div class="flex justify-between items-center mt-6">
+            <a href="{{ path('app_product_index') }}"
+               class="px-4 py-2 rounded-lg bg-[#669bbc] text-white hover:bg-[#003049] transition duration-300">
+                ← Back to list
+            </a>
 
-    {{ include('product/_delete_form.html.twig') }}
+            <div>
+                {{ include('product/_delete_form.html.twig') }}
+            </div>
+        </div>
+
     </div>
+</div>
 {% endblock %}
