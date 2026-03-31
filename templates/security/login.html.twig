@@ -21,11 +21,11 @@
 
         <h1 class="text-2xl font-bold text-[#780000] text-center mb-6">Sign In</h1>
 
-        <form method="post" class="space-y-4">
+        <form method="post" class="space-y-4" action="{{ path('app_login')}}">
             <div>
                 <label for="username" class="block mb-1 font-medium text-[#003049]">Email</label>
                 <input type="email"
-                       name="_username"
+                       name="email"
                        id="username"
                        value="{{ last_username }}"
                        required
@@ -37,7 +37,7 @@
             <div>
                 <label for="password" class="block mb-1 font-medium text-[#003049]">Password</label>
                 <input type="password"
-                       name="_password"
+                       name="password"
                        id="password"
                        required
                        autocomplete="current-password"

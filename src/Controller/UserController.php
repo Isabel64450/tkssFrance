@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UserController extends AbstractController
 {
@@ -52,7 +55,7 @@ final class UserController extends AbstractController
 
     #[Route('/profile', name: 'app_profile')]
  
-     public function profile(Security $security): Response
+     public function profile(Security $security,OrderRepository $orderRepository ): Response
     {
      $user = $security->getUser();     
     $age = null;
@@ -63,12 +66,53 @@ final class UserController extends AbstractController
         $birthDate = $user->getDateOfBirth(); 
         $age = $birthDate->diff($today)->y; 
     }
+    $orders=[];
+    if($user){
+        $orders=$orderRepository->findBy(
+            ['user'=>$user],
+            ['createdAt'=>'DESC']
+        );
+    }
 
     return $this->render('user/profile.html.twig', [
         'user' => $user,
         'age' => $age, 
+        'orders'=>$orders
     ]);
    }
+
+
+#[Route('/admin/user/{id}', name: 'admin_user_profile')]
+#[IsGranted('ROLE_ADMIN')]
+public function UsersProfile($id, UserRepository $userRepository, OrderRepository $orderRepository):Response
+{     
+    
+        $user = $userRepository->find($id);
+
+    if (!$user) {
+        throw $this->createNotFoundException('Utilisateur non trouvé');
+    }
+
+      $age = null;
+
+    if ($user->getDateOfBirth()) {
+        $today = new \DateTimeImmutable('today');
+        $age = $user->getDateOfBirth()->diff($today)->y;
+    }
+
+    $orders = $orderRepository->findBy(
+        ['user' => $user],
+        ['createdAt' => 'DESC']
+    );
+
+    return $this->render('user/profile.html.twig', [
+        'user' => $user,
+        'age' => $age,
+        'orders' => $orders
+    ]);
+}
+
+
 
     #[Route('/user/{id}/make-editor', name: 'app_user_make_editor', requirements: ['id' => '\d+'])]
     public function makeEditor(User $user, EntityManagerInterface $entityManager): Response

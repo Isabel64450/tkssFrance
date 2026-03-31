@@ -3,34 +3,120 @@
 {% block title %}Hello OrderController!{% endblock %}
 
 {% block body %}
-<div class="container">
-       <div class="row">  
-               <div class="col-8">
-                     <h1 class="mt-4 mb-4">Order</h1>
-                     {{ form_start(form)}}
-                     {{ form_widget(form) }}
-                     <input type="submit" value="Continuer" class="btn btn-outline-primary mt-5">
-                     {{ form_end(form) }}
-               </div>
-                <div class="col-4 mt-5">
-                <span class='mb-2'>Montant à payer: </span>
-                <h3>
-                    <span id="card-price">{{ total }}</span>
-                    €
-                </h3>  
-                <span>Frais de livraison</span> 
-                <h3>
-                    <span id="shippingCost"></span>
-                    €
-                </h3> 
-                <span>Montant total à payer</span> 
-                <h3>
-                    <span class="total-price"></span>
-                    €
-                </h3> 
+<div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- FORM -->
+        <div class="md:col-span-2">
+            <h1 class="text-2xl font-bold my-6">Commande</h1>
+
+            {{ form_start(form, {
+                attr: {
+                    class: 'space-y-6 bg-white p-6 rounded-2xl shadow-md'
+                }
+            }) }}
+
+            <!-- Nom / Prénom -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ form_label(form.firstName, null, {
+                        label_attr: { class: 'text-sm font-medium text-gray-700' }
+                    }) }}
+                    {{ form_widget(form.firstName, {
+                        attr: { class: 'mt-1 w-full rounded-lg border border-gray-300 px-3 py-2' }
+                    }) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.lastName) }}
+                    {{ form_widget(form.lastName, {
+                        attr: { class: 'mt-1 w-full rounded-lg border border-gray-300 px-3 py-2' }
+                    }) }}
+                </div>
             </div>
-           
-       </div>
+
+            <!-- Email -->
+            <div>
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {
+                    attr: { class: 'mt-1 w-full rounded-lg border border-gray-300 px-3 py-2' }
+                }) }}
+            </div>
+
+            <!-- Téléphone -->
+            <div>
+                {{ form_label(form.telephoneNumber) }}
+                {{ form_widget(form.telephoneNumber, {
+                    attr: { class: 'mt-1 w-full rounded-lg border border-gray-300 px-3 py-2' }
+                }) }}
+            </div>
+
+            <!-- Adresse -->
+            <div>
+                {{ form_label(form.address) }}
+                {{ form_widget(form.address, {
+                    attr: { class: 'mt-1 w-full rounded-lg border border-gray-300 px-3 py-2' }
+                }) }}
+            </div>
+
+            <!-- Ville -->
+            <div>
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city, {
+                    attr: { class: 'mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 bg-white' }
+                }) }}
+            </div>
+
+            <!-- Checkbox -->
+            <div class="flex items-center space-x-2">
+                {{ form_widget(form.payOnDelivery, {
+                    attr: { class: 'h-4 w-4 text-blue-600 border-gray-300 rounded' }
+                }) }}
+                {{ form_label(form.payOnDelivery, null, {
+                    label_attr: { class: 'text-sm text-gray-700' }
+                }) }}
+            </div>
+
+            <!-- Bouton -->
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+            >
+                Continuer
+            </button>
+
+            {{ form_end(form) }}
+        </div>
+
+        <!-- Résumé commande -->
+        <div class="bg-gray-50 p-6 rounded-2xl shadow-md h-fit mt-6 md:mt-0">
+            <div class="space-y-4">
+
+                <div>
+                    <span class="text-gray-600">Montant à payer:</span>
+                    <h3 class="text-xl font-bold">
+                        <span id="card-price">{{ total }}</span> €
+                    </h3>
+                </div>
+
+                <div>
+                    <span class="text-gray-600">Frais de livraison</span>
+                    <h3 class="text-xl font-bold">
+                        <span id="shippingCost"></span> €
+                    </h3>
+                </div>
+
+                <div class="border-t pt-4">
+                    <span class="text-gray-800 font-medium">Montant total à payer</span>
+                    <h3 class="text-2xl font-bold text-green-600">
+                        <span class="total-price"></span> €
+                    </h3>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
 <script>

@@ -3,19 +3,42 @@
 {% block title %}Sous-catégories{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1 class="mb-5 mt-5">{{ subCategory.name }}</h1>
-    <div class="row">
+<div class="max-w-7xl mx-auto px-4">
+    <h1 class="text-3xl font-bold text-center my-10">
+        {{ subCategory.name }}
+    </h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {% for product in products %}
-            <div class="col-md-3 mt-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ asset('uploads/images/'~product.images)}}" class="imgproduct card-img-top" alt="image des produits">
-                    <div class="card-body">
-                        <a class="titleProductLink" href="{{ path('app_home_product_show',{'id':product.id}) }} "><h5 class="card-title titleProduct">{{ product.name }}</h5></a>
-                        <p class="card-text">{{ product.description|slice(0,60) }}...</p>
-                        <h3>{{ product.price }} €</h3> 
-                        <a href="#"{# {{ path('app_cart_new',{'id':product.id}) }}" #} class="btn btn-outline-success">Ajouter au panier</a>
-                    </div>
+            <div class="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition">
+                
+                <img 
+                    src="{{ asset('uploads/images/' ~ product.images) }}" 
+                    class="w-full h-48 object-cover" 
+                    alt="image des produits"
+                >
+
+                <div class="p-4">
+                    <a href="{{ path('app_home_product_show', {'id': product.id}) }}">
+                        <h5 class="text-lg font-semibold text-gray-800 hover:text-blue-600 transition">
+                            {{ product.name }}
+                        </h5>
+                    </a>
+
+                    <p class="text-gray-600 text-sm mt-2">
+                        {{ product.description|slice(0,60) }}...
+                    </p>
+
+                    <h3 class="text-xl font-bold text-green-600 mt-3">
+                        {{ product.price }} €
+                    </h3>
+
+                    <a 
+                        href= {{ path('app_cart_new',{'id':product.id}) }}
+                        class="mt-4 inline-block w-full text-center border border-green-600 text-green-600 py-2 rounded-lg hover:bg-green-600 hover:text-white transition"
+                    >
+                        Ajouter au panier
+                    </a>
                 </div>
             </div>
         {% endfor %}

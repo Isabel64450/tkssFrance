@@ -59,26 +59,15 @@
                             </span>
                         {% endif %}
                     </td>
+                  <td class="px-6 py-4">
+                     <div class="flex flex-wrap gap-2">
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}"  class="px-3 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 transition"> Voir </a>
 
-                    <td class="px-6 py-4 space-x-2">
+                        <a href="{{ path('app_product_edit', {'id': product.id}) }}"   onclick="return confirm('Voulez vous vraiment modifier le produit ?')"  class="px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700 transition"> Modifier    </a>
 
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}"
-                           class="inline-block px-3 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 transition">
-                            Voir
-                        </a>
-
-                        <a href="{{ path('app_product_edit', {'id': product.id}) }}"
-                           onclick="return confirm('Voulez vous vraiment modifier le produit ?')"
-                           class="inline-block px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700 transition">
-                            Modifier
-                        </a>
-
-                        <a href="{{ path('app_product_stock_add', {'id': product.id}) }}"
-                           class="inline-block px-3 py-1 text-sm text-white bg-indigo-600 rounded hover:bg-indigo-700 transition">
-                            + Stock
-                        </a>
-
-                    </td>
+                        <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" class="px-3 py-1 text-sm text-white bg-indigo-600 rounded hover:bg-indigo-700 transition"> + Stock</a>
+                     </div>
+                  </td>
 
                 </tr>
 

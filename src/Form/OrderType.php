@@ -14,43 +14,47 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstName', null,[
-                'attr'=>[
-                    'class'=>'form form-control'
-                ]
-            ])
-            ->add('lastName', null,[
-                'attr'=>[
-                    'class'=>'form form-control'
-                ]
-            ])
-            ->add('telephoneNumber', null,[
-                'attr'=>[
-                    'class'=>'form form-control'
-                ]
-            ])
-            ->add('email', null,[
-                'attr'=>[
-                    'class'=>'form form-control'
-                ]
-            ])
-            ->add('address', null,[
-                'attr'=>[
-                    'class'=>'form form-control'
-                ]
-            ])
-             ->add('payOnDelivery',null,[
-                'label'=>'Payez a la livraison'
-             ]              
-            ) 
-            ->add('city', EntityType::class, [
-                'class' => City::class,
-                'choice_label' => 'name',
-                'attr'=>[
-                        'class'=>'form form-control'
-                    ]
-            ])
-        ;
+    ->add('firstName', null, [
+        'label' => 'Prénom',
+        'attr' => [
+            'class' => 'w-full'
+        ]
+    ])
+    ->add('lastName', null, [
+        'label' => 'Nom',
+        'attr' => [
+            'class' => 'w-full'
+        ]
+    ])
+    ->add('telephoneNumber', null, [
+        'label' => 'Téléphone',
+        'attr' => [
+            'class' => 'w-full'
+        ]
+    ])
+    ->add('email', null, [
+        'label' => 'Email',
+        'attr' => [
+            'class' => 'w-full'
+        ]
+    ])
+    ->add('address', null, [
+        'label' => 'Adresse',
+        'attr' => [
+            'class' => 'w-full'
+        ]
+    ])
+    ->add('city', EntityType::class, [
+        'class' => City::class,
+        'choice_label' => 'name',
+        'label' => 'Ville',
+        'attr' => [
+            'class' => 'w-full'
+        ]
+    ])
+    ->add('payOnDelivery', null, [
+        'label' => 'Payer à la livraison'
+    ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
