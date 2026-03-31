@@ -2,12 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -28,11 +31,7 @@ class RegistrationFormType extends AbstractType
         'widget' => 'single_text',
         'required' => false,
     ])
-
-       /*     ->add('inscriptionDate', DateType::class, [
-        'widget' => 'single_text',
-    ]) */
-
+      
            ->add('gender', ChoiceType::class, [
         'choices' => [
             'Male' => 'male',
@@ -42,12 +41,18 @@ class RegistrationFormType extends AbstractType
         'required' => false,
     ])
 
-        /*    ->add('isActive', ChoiceType::class, [
-        'choices' => [
-            'Active' => true,
-            'Inactive' => false,
-        ],
-    ]) */
+       ->add('telephoneNumber', TextType::class, [
+                'required' => false,
+            ])
+            ->add('address', TextType::class, [
+                'required' => false,
+            ])
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'choice_label' => 'name', // la colonne à afficher dans le select
+                'placeholder' => 'Choisissez votre ville',
+                'required' => false,
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

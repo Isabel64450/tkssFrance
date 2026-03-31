@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Entity\City;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -60,11 +61,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $orders;
 
+    #[ORM\Column(length: 180)]
+    private ?string $telephoneNumber = null;
+
+    #[ORM\Column(length: 180)]
+    private ?string $address = null;
+
+    #[ORM\ManyToOne(targetEntity: City::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?City $city = null;
+
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
         $this->inscriptionDate = new \DateTimeImmutable();
-        $this->isActive = false; 
+        $this->isActive = false;
+        
     }
      
     public function getId(): ?int
@@ -249,4 +262,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getTelephoneNumber(): ?string
+    {
+        return $this->telephoneNumber;
+    }
+
+    public function setTelephoneNumber(string $telephoneNumber): static
+    {
+        $this->telephoneNumber = $telephoneNumber;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+
+    
+
+   
 }

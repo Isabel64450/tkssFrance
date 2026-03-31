@@ -112,6 +112,31 @@ public function UsersProfile($id, UserRepository $userRepository, OrderRepositor
     ]);
 }
 
+#[Route('/admin/user/{id}/toggle', name: 'admin_toggle_user', methods: ['POST'])]
+#[IsGranted('ROLE_ADMIN')]
+public function toggleUser(
+    int $id,
+    UserRepository $userRepository,
+    EntityManagerInterface $em
+): Response {
+    $user = $userRepository->find($id);
+
+    if (!$user) {
+        throw $this->createNotFoundException('Utilisateur non trouvé');
+    }
+
+    
+    $user->setIsActive(!$user->isActive());
+
+    $em->flush();
+
+    return $this->redirectToRoute('admin_user_profile', [
+        'id' => $user->getId()
+    ]);
+}
+
+
+
 
 
     #[Route('/user/{id}/make-editor', name: 'app_user_make_editor', requirements: ['id' => '\d+'])]

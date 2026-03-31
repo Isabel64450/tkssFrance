@@ -34,7 +34,7 @@ class Order
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?bool $payOnDelivery = null;
 
     /**

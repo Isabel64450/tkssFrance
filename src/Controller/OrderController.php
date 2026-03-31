@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Order;
+
 use App\Entity\OrderProducts;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
@@ -30,51 +31,78 @@ final class OrderController extends AbstractController
     public function index(Request $request, SessionInterface $session, ProductRepository $productRepository, EntityManagerInterface $entityManager, Cart $cart, Security $security): Response
     {   
         $data=$cart->getCart($session);
+        $user=$security->getUser();       
+
+        if (!$user instanceof \App\Entity\User) {
+              return $this->redirectToRoute('app_login');
+         }
+
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);       
         if($form->isSubmitted() && $form->isValid()){
-            $user = $security->getUser();
-            if($order->isPayOnDelivery()){
-                if(!empty($data['total'])){
-                $totalPrice = $data['total'] + $order->getCity()->getShippingCost();
-                $order->setTotalPrice($totalPrice);
-                $order->setCreatedAt(new \DateTimeImmutable());
-                $order->setUser($user);
-                $entityManager->persist($order);
-                $entityManager->flush();
+           $paymentMethod = $form->get('paymentMethod')->getData();
 
-            foreach ($data['cart'] as $value){
-            $orderProduct = new OrderProducts();
-            $orderProduct->setOrder($order);
-            $orderProduct->setProduct($value['product']);
-            $orderProduct->setQuantity($value['quantity']);
-            $entityManager->persist($orderProduct);
+        if (!empty($data['total'])) {
+
             
-           }
-            $entityManager->flush();
-         }
+            $order->setTotalPrice($data['total']);
+            $order->setCreatedAt(new \DateTimeImmutable());
+            $order->setUser($user);
 
-          $session->set('cart',[]);
-          $html = $this->renderView('mail/orderConfirm.html.twig',['order'=>$order]);
-          $email = (new Email())
-          ->from('izaberu.creations@gmail.com')
-          ->to('test@gmail.com')
-          ->subject('Confirmation of order receipt')
-          ->html($html);
-          $this->mailer->send($email);
-         
-          return $this->redirectToRoute('app_order_message');  
+            $order->setFirstName($user->getFirstName());
+            $order->setLastName($user->getLastName());
+            $order->setEmail($user->getEmail());
+            $order->setTelephoneNumber($user->getTelephoneNumber());
+            $order->setAddress($user->getAddress());
+            $order->setCity($user->getCity());
 
-        }              
+            $entityManager->persist($order);
 
+            foreach ($data['cart'] as $value) {
+                $orderProduct = new OrderProducts();
+                $orderProduct->setOrder($order);
+                $orderProduct->setProduct($value['product']);
+                $orderProduct->setQuantity($value['quantity']);
+                $entityManager->persist($orderProduct);
             }
-            
-       
-        return $this->render('order/index.html.twig', [
-            'form' => $form->createView(),           
-            'total'=>$data['total']
-        ]);
+
+            $entityManager->flush();
+
+         
+            if ($paymentMethod === 'cash_split') {
+
+                // ✔️ paiement en boutique
+                $session->set('cart', []);
+
+                $html = $this->renderView('mail/orderConfirm.html.twig', [
+                    'order' => $order
+                ]);
+
+                $email = (new Email())
+                    ->from('izaberu.creations@gmail.com')
+                    ->to($user->getEmail())
+                    ->subject('Confirmation de commande')
+                    ->html($html);
+
+                $this->mailer->send($email);
+
+                return $this->redirectToRoute('app_order_message');
+            }
+
+            if ($paymentMethod === 'stripe') {
+              
+                return $this->redirectToRoute('app_stripe_checkout', [
+                    'id' => $order->getId()
+                ]);
+            }
+        }
+    }
+
+    return $this->render('order/index.html.twig', [
+        'form' => $form->createView(),
+        'total' => $data['total']
+    ]);
     }
 
 
