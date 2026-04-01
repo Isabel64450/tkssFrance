@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">
+        Paiement en boutique 
+    </h1>
+
+    <p class="text-gray-600 mb-6">
+        Votre commande a été enregistrée.<br>
+        Vous pouvez payer en plusieurs fois directement en boutique.
+    </p>
+
+    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <p class="text-gray-700">Montant total :</p>
+        <p class="text-2xl font-bold text-green-600">
+            {{ order.totalPrice }} €
+        </p>
+        <p class="text-gray-700 mt-2">Montant déjà payé :</p>
+        <p class="text-xl font-semibold text-blue-600">
+            {{ paymentsTotal|default(0) }} €
+        </p>
+        <p class="text-gray-700 mt-2">Reste à payer :</p>
+        <p class="text-xl font-semibold text-red-600">
+            {{ order.totalPrice - (paymentsTotal|default(0)) }} €
+        </p>
+
+
+    </div>
+
+
+     {% if order.totalPrice - (paymentsTotal|default(0)) > 0 %}
+        <form action="{{ path('app_payment_cash_add', {'id': order.id}) }}" method="POST" class="mb-6">
+            <label class="block text-gray-700 mb-2">Montant payé maintenant :</label>
+            <input type="number" name="amount" 
+                   min="1" 
+                   max="{{ order.totalPrice - (paymentsTotal|default(0)) }}" 
+                   step="1"
+                   class="border rounded-lg p-2 w-full mb-4">
+            <button type="submit"
+                    class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                Enregistrer le paiement
+            </button>
+        </form>
+    {% else %}
+        <div class="bg-green-100 p-4 rounded-lg mb-6">
+            <p class="text-green-800 font-semibold">
+                Paiement complet ! Merci pour votre commande.
+            </p>
+        </div>
+    {% endif %}
+
+    <a href="{{ path('app_profile') }}" 
+       class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition mb-4">
+        Voir mes paiements / Commandes
+    </a>
+
+    <a href="{{ path('app_homepage') }}" 
+       class="inline-block bg-gray-200 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-300 transition">
+        Retour à l'accueil
+    </a>
+
+</div>
+{% endblock %}

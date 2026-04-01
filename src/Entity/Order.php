@@ -56,9 +56,16 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    /**
+     * @var Collection<int, Payment>
+     */
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'orderRef')]
+    private Collection $payments;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,7 +150,7 @@ class Order
         return $this->payOnDelivery;
     }
 
-    public function setPayOnDelivery(bool $payOnDelivery): static
+    public function setPayOnDelivery(?bool $payOnDelivery): static
     {
         $this->payOnDelivery = $payOnDelivery;
 
@@ -224,6 +231,36 @@ class Order
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payment>
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): static
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments->add($payment);
+            $payment->setOrderRef($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): static
+    {
+        if ($this->payments->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getOrderRef() === $this) {
+                $payment->setOrderRef(null);
+            }
+        }
 
         return $this;
     }

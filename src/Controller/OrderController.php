@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Order;
-
 use App\Entity\OrderProducts;
+use App\Entity\Payment;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -71,8 +71,16 @@ final class OrderController extends AbstractController
 
          
             if ($paymentMethod === 'cash_split') {
+                $payment = new Payment();
+                $payment->setOrderRef($order); 
+                $payment->setMethod('cash_split');
+                $payment->setAmount(0); 
+                $payment->setCreatedAt(new \DateTimeImmutable());
+                $payment->setIsCompleted(false);
 
-                // ✔️ paiement en boutique
+                $entityManager->persist($payment);
+                $entityManager->flush();
+             
                 $session->set('cart', []);
 
                 $html = $this->renderView('mail/orderConfirm.html.twig', [
@@ -87,12 +95,12 @@ final class OrderController extends AbstractController
 
                 $this->mailer->send($email);
 
-                return $this->redirectToRoute('app_order_message');
+                return $this->redirectToRoute('app_payment_cash',['id'=>$order->getId()]);
             }
 
             if ($paymentMethod === 'stripe') {
               
-                return $this->redirectToRoute('app_stripe_checkout', [
+                return $this->redirectToRoute('app_stripe', [
                     'id' => $order->getId()
                 ]);
             }
@@ -104,6 +112,25 @@ final class OrderController extends AbstractController
         'total' => $data['total']
     ]);
     }
+
+
+#[Route('/payment/cash/{id}', name: 'app_payment_cash')]
+public function cashPayment(Order $order): Response
+{
+    return $this->render('payment/cash.html.twig', [
+        'order' => $order
+    ]);
+}
+
+
+
+
+
+
+
+
+
+
 
 
         #[Route('/city/{id}/shipping/cost', name: 'app_city_shipping_cost')]

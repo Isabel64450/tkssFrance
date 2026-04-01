@@ -71,7 +71,7 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-100 text-gray-600 text-sm uppercase">
-                        <th class="p-3">ID</th>
+                        
                         <th class="p-3">Date</th>
                         <th class="p-3">Total</th>
                         <th class="p-3">Statut</th>
@@ -80,7 +80,7 @@
                 <tbody>
                     {% for order in user.orders %}
                         <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3">#{{ order.id }}</td>
+                           
                             <td class="p-3">{{ order.createdAt|date('d/m/Y') }}</td>
                             <td class="p-3">{{ order.totalPrice }} €</td>
                             <td class="p-3">

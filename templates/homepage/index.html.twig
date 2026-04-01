@@ -1,38 +1,3 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Boutique{% endblock %}
-
-{% block body %}
-<div class="container">
-    <h1 class="mb-5 mt-5">Produits de la boutique</h1>
-    
-    <div class="row g-4">
-        {% for product in products %}
-            <div class="col-12 col-md-6 col-lg-3 ">
-                <div class="card h-100" >
-                   <img src="{{ asset('uploads/images/'~product.images)}}" class="imgproduct card-img-top" alt="image des produits"> 
-                    <div class="card-body">
-                        <a class="titleProductLink" href=" {{ path('app_home_product_show',{'id':product.id}) }} "><h5 class="card-title titleProduct">{{ product.name }}</h5></a> 
-                        <p class="card-text">{{ product.description|slice(0,60) }}...</p>
-                        <h3>{{ product.price }} €</h3> 
-                        <a href=" {{ path('app_cart_new',{'id':product.id}) }} " class="btn btn-outline-success">Ajouter au panier</a> 
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="mt-5">
-     {{ knp_pagination_render(products, 'layouts/pagination_template.html.twig') }} 
-    </div>
-   
-</div>
-
-
-
-{% endblock %}
- #}
-
-
  {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
@@ -72,19 +37,12 @@
         <div class="grid md:grid-cols-3 gap-6">
 
            
-            <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-                <img src="https://via.placeholder.com/400x250" class="rounded mb-4">
-                <h3 class="text-xl font-semibold mb-2">Festival Latino</h3>
-                <p class="text-gray-600 text-sm mb-2">Bordeaux - Juin 2026</p>
-                <p class="text-gray-500 text-sm">
-                    Spectacle de danse Tinkus avec musique live.
-                </p>
-            </div>
+            
 
             <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-                <img src="https://via.placeholder.com/400x250" class="rounded mb-4">
-                <h3 class="text-xl font-semibold mb-2">Carnaval</h3>
-                <p class="text-gray-600 text-sm mb-2">Pau - Mars 2026</p>
+                <img src='/uploads/images/CarnavalChinois2026.jpeg' class="rounded mb-4">
+                <h3 class="text-xl font-semibold mb-2">Carnaval Chinois 2026</h3>
+                <p class="text-gray-600 text-sm mb-2">Paris - Mars 2026</p>
                 <p class="text-gray-500 text-sm">
                     Participation au défilé avec costumes traditionnels.
                 </p>
@@ -98,7 +56,15 @@
                     Découverte des danses boliviennes et initiation.
                 </p>
             </div>
-
+            
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+                <img src='/uploads/images/Bilbao2026.jpeg' class="rounded mb-4">
+                <h3 class="text-xl font-semibold mb-2">Carnaval Bilbao 2026</h3>
+                <p class="text-gray-600 text-sm mb-2">Bilbao - Mars 2026</p>
+                <p class="text-gray-500 text-sm">
+                    Carnaval d'integration de Gexto.
+                </p>
+            </div>
         </div>
 
     </div>
