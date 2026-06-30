@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class HomepageController extends AbstractController
 {
@@ -33,8 +34,8 @@ final class HomepageController extends AbstractController
     }
 
 
-
-   #[Route('/product/{id}/show ', name: 'app_home_product_show', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+   #[Route('/product/{id}/show', name: 'app_home_product_show', methods: ['GET'])]
     public function showProduct(Product $product, ProductRepository $productRepository,CategoryRepository $categoryRepository): Response 
     
     {
@@ -46,8 +47,8 @@ final class HomepageController extends AbstractController
             'categories'=>$categoryRepository->findAll(),
         ]);
     } 
-
-      #[Route('/product/subcategory/{id}/filter ', name: 'app_home_product_filter', methods: ['GET'])]
+      #[IsGranted('ROLE_USER')]
+      #[Route('/product/subcategory/{id}/filter', name: 'app_home_product_filter', methods: ['GET'])]
         public function filter($id, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository): Response 
     
     {  
